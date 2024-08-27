@@ -32,8 +32,20 @@ app.post("/s",(req,res)=>{
     res.redirect("/")
   
 })
+app.post("/portfolio",(req,res)=>{
+  
 
-    
+    res.sendFile(__dirname+"/portfolio.html")})
+
+app.post("/sendmessage",(req,res)=>{
+        var name = req.body.Name;
+        var Email= req.body.Email;
+        var subject = req.body.subject;
+        var textarea = req.body.textarea;
+        console.log(name,Email,subject, textarea);
+        res.redirect("/")
+      
+    })
 app.listen(3000,function(){
     console.log("server started")
 })
