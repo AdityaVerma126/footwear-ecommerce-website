@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+        }
+        li:hover .item-image {
+            transform: scale(1.05);
+        }
+        .item-details {
+            flex-grow: 1;
+        }
+        .item-details h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .item-details p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        .delete-btn:hover {
+            background-color: #ff3333;
+            transform: scale(1.05);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Wishlist</h1>
+        <ul id="wishlist">
+            <!-- Wishlist items will be dynamically added here -->
+        </ul>
+    </div>
+    
+    <script>
+        const wishlist = document.getElementById('wishlist');
+
+        function loadWishlist() {
+            const items = JSON.parse(localStorage.getItem('wishlist')) || [];
+            wishlist.innerHTML = '';
+            items.forEach((item, index) => {
+                setTimeout(() => addItemToList(item), index * 100);
+            });
+        }
+
+        function addItemToList(item) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" class="item-image">
+                <div class="item-details">
+                    <h3>${item.name}</h3>
+                    <p>${item.description}</p>
+                </div>
+                <button class="delete-btn" data-id="${item.id}">Delete</button>
+            `;
+            wishlist.appendChild(li);
+        }
+
+        function deleteItem(e) {
+            if (e.target.classList.contains('delete-btn')) {
+                const itemId = e.target.getAttribute('data-id');
+                let items = JSON.parse(localStorage.getItem('wishlist')) || [];
+                items = items.filter(item => item.id !== itemId);
+                localStorage.setItem('wishlist', JSON.stringify(items));
+                const li = e.target.closest('li');
+                li.style.animation = 'fadeIn 0.5s ease-out reverse';
+                setTimeout(() => li.remove(), 500);
+            }
+        }
+
+        wishlist.addEventListener('click', deleteItem);
+
+        // Load wishlist items when the page loads
+        window.addEventListener('load', loadWishlist);
+    </script>
+</body>
+</html>

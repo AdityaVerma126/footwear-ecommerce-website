@@ -22,6 +22,9 @@ app.post("/", (req, res) => {
 app.get("/about", (req, res) => {
     res.sendFile(__dirname + "/about.html")
 })
+app.get("/wishlist", (req, res) => {
+    res.sendFile(__dirname + "/wishlist.html")
+})
 app.get("/blog", (req, res) => {
     res.sendFile(__dirname + "/blog.html")
 })
