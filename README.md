@@ -1,27 +1,58 @@
+# Footcap - eCommerce Website
 
+Footcap is a fully responsive ecommerce website, built using HTML, CSS, and JavaScript.
 
-  <h2 align="center">Footcap - eCommerce website</h2>
+## Live Demo
 
-  Footcap is fully responsive ecommerce website, <br />Responsive for all devices, built using HTML, CSS, and JavaScript.
+Check out the live demo of the website: [Footcap eCommerce](https://github.com/AdityaVerma126/footwear-ecommerce-website.git)
 
-  <a href="https://codewithsadee.github.io/footcap/"><strong>➥ Live Demo</strong></a>
+## Demo Screenshots
 
-</div>
+![Footcap Desktop Demo](./readme-images/desktoppage.png "Desktop Demo")
+![Footcap Desktop Demo](./readme-images/homepage2.png "Desktop page 2 Demo")
+![Footcap Desktop Demo](./readme-images/homepage3.png "Desktop page 3 Demo")
+![Footcap Desktop Demo](./readme-images/homepage4.png "Desktop page 4 Demo")
 
-<br />
+![Footcap About page](./readme-images/aboutpage.png "About page")
 
-### Demo Screeshots
+![Footcap Blog page](./readme-images/blogpage.png "Blog page")
 
-![Footcap Desktop Demo](./readme-images/desktop.png "Desktop Demo")
+![Footcap Product Page](./readme-images/productpage.png "Product Page")
 
-### Prerequisites
+![Footcap Cart Page](./readme-images/wishlistpage.png "Cart Page")
 
-Before you begin, ensure you have met the following requirements:
+![Footcap Contactus page](./readme-images/contactuspage.png "Contactus page")
+![Footcap login page](./readme-images/loginpage.png "login page")
 
+## Features
 
+- Responsive design that works on desktop, tablet, and mobile devices
+- Product catalog with filtering and sorting options
+- Product detail pages with image gallery and related products
+- Shopping cart functionality
+- User authentication and account management
+- Checkout process with multiple payment options
 
-### Contact
+## Technologies Used
 
-If you want to contact with me you can reach me at ADITYA VERMA
+- HTML5
+- CSS3
+- JavaScript
+- [Any other libraries or frameworks you've used]
 
+## Installation and Setup
 
+1. Clone the repository
+2. Open `index.html` in your browser
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## Contact
+
+If you want to contact me, you can reach me at [adityaverma12609@gmail.com].

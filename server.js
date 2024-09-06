@@ -1,4 +1,3 @@
-
 const express = require("express")
 const bodyParser = require("body-parser")
 
@@ -32,10 +31,9 @@ app.get("/contactus", (req, res) => {
     res.sendFile(__dirname + "/contactus.html")
 })
 
-
-
-
-
+app.get("/shop", (req, res) => {
+    res.sendFile(__dirname + "/shop.html")
+})
 
 app.post("/s", (req, res) => {
     var user = req.body.username;
