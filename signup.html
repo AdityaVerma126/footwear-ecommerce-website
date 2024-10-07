@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Footcap</title>
+    <link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+    <div class="main">
+        <h1>Footcap</h1>
+        <h3>Create your account</h3>
+        <form id="signupForm">
+            <label for="username">
+                Username:
+            </label>
+            <input type="text" class="username" name="username"
+                   id="username" 
+                   placeholder="Enter your Username" required>
+
+            <label for="email">
+                Email:
+            </label>
+            <input type="email" class="email" name="email"
+                   id="email" 
+                   placeholder="Enter your Email" required>
+
+            <label for="password">
+                Password:
+            </label>
+            <input type="password" name="password"
+                   class="password" id="password" 
+                   placeholder="Enter your Password" required>
+
+            <label for="confirm-password">
+                Confirm Password:
+            </label>
+            <input type="password" name="confirm-password"
+                   class="password" id="confirm-password" 
+                   placeholder="Confirm your Password" required>
+
+            <div class="wrap">
+                <button type="submit">
+                    Sign Up
+                </button>
+            </div>
+        </form>
+        <p>Already have an account?
+            <a href="/login" style="text-decoration: none;">
+                Log in
+            </a>
+        </p>
+    </div>
+    <script src="/js/signup.js"></script>
+    <!-- Add this near the end of your body tag -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(form);
+            fetch('/signup', {
+                method: 'POST',
+                body: new URLSearchParams(formData),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        try {
+                            return JSON.parse(text);
+                        } catch (e) {
+                            throw new Error(text);
+                        }
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === "Signup successful") {
+                    window.location.href = '/login';
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during signup: ' + (error.message || 'Unknown error'));
+            });
+        });
+    });
+    </script>
+</body>
+</html>

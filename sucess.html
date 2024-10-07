@@ -69,18 +69,18 @@
         justify-content: center;
         align-items: center;
     }</style>
+<script src="/js/sucess.js" defer></script>
 </head>
 <body>
     <div class="main">
         <h1>Footcap</h1>
         <h3>Enter your login credentials</h3>
-        <form action="\s" method="post">
+        <form id="loginForm">
               <label for="first">
                     Username:
               </label>
               <input type="text" class="username" name="username"
                      id="first" 
-                      
                      placeholder="Enter your Username" required>
 
               <label for="password">
@@ -89,7 +89,6 @@
               <input type="password"  name="password"
               class="password"
                      id="password" 
-                     
                      placeholder="Enter your Password" required>
 
               <div class="wrap">
@@ -99,7 +98,7 @@
               </div>
         </form>
         <p>Not registered?
-              <a href="#"
+              <a href="/signup"
                  style="text-decoration: none;">
                     Create an account
               </a>

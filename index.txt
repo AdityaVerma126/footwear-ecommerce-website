@@ -234,7 +234,6 @@ Authoritatively morph 24/7 potentialities with error-free partnerships.
 placeholder = Email Address
 Subscribe
 
-&copy; 2022 codewithsadee. All Rights Reserved
 
 
 

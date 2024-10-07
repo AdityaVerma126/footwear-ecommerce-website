@@ -38,12 +38,16 @@ Check out the live demo of the website: [Footcap eCommerce](https://github.com/A
 - HTML5
 - CSS3
 - JavaScript
-- [Any other libraries or frameworks you've used]
-
+- Node.js
+- Express.js
+- MongoDB
 ## Installation and Setup
 
 1. Clone the repository
-2. Open `index.html` in your browser
+2. install node modules
+3. use server 3000 to see the website
+
+
 
 ## Contributing
 
@@ -51,7 +55,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [no license but private ](LICENSE).
 
 ## Contact
 
