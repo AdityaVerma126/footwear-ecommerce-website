@@ -3,37 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - Footcap</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/shop.css">
+    <title>Shop</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shop.css">
 </head>
 <body>
-    <header>
-        <!-- Include your existing header here -->
-    </header>
-
-    <main>
-        <section class="shop-container">
-            <h1>Our Products</h1>
-            <div class="filter-container">
-                <select id="category-filter">
-                    <option value="all">All Categories</option>
-                    <option value="men">Men</option>
-                    <option value="women">Women</option>
-                    <option value="sports">Sports</option>
-                </select>
-                <input type="text" id="search-input" placeholder="Search products...">
-            </div>
-            <div class="product-grid" id="product-grid">
-                <!-- Products will be dynamically added here -->
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <!-- Include your existing footer here -->
-    </footer>
-
-    <script src="js/shop.js"></script>
+    <div class="shop-container">
+        <h1>Our Products</h1>
+        <div class="filter-container">
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+                <option value="sports">Sports</option>
+                <option value="kids">Kids</option>
+            </select>
+            <input type="text" id="search-input" placeholder="Search products...">
+        </div>
+        <div class="product-grid">
+            <!-- Products will be inserted here by JavaScript -->
+        </div>
+    </div>
+    <script src="/js/shop.js"></script>
 </body>
 </html>

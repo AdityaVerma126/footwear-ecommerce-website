@@ -1,14 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const compression = require("compression");
+const path = require("path");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const app = express();
 const subscribe = []; 
 
-// Connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/footcapDB", { useNewUrlParser: true, useUnifiedTopology: true })
+// Connect  MongoDB
+mongoose.connect("mongodb://localhost:27017/footcapDB")
   .then(() => {
     console.log("Connected to MongoDB");
+    seedProducts(); // Call the function to seed products
     app.listen(3000, function () {
         console.log("server started on port 3000");
     });
@@ -18,22 +23,56 @@ mongoose.connect("mongodb://localhost:27017/footcapDB", { useNewUrlParser: true,
     process.exit(1);
   });
 
-// Handle connection errors
+//  connection errors
 mongoose.connection.on('error', err => {
   console.error('MongoDB connection error:', err);
 });
 
-// Define User Schema
+//  User Schema
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }
 });
 
-// Create User model
+// User model
 const User = mongoose.model("User", userSchema);
+// product schema
+const productSchema = new mongoose.Schema({
+  id: { type: Number, required: true, unique: true },
+  name: { type: String, required: true },
+  category: { type: String, required: true },
+  price: { type: Number, required: true },
+  image: { type: String, required: true }
+});   
 
-app.use(express.static("assets"));
+//product model
+const Product = mongoose.model("Product", productSchema); 
+// contact schema
+const contactSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  phone: { type: String, required: true },
+  message: { type: String, required: true }
+});
+
+// contact model
+const Contact = mongoose.model("Contact", contactSchema);
+        
+
+
+
+
+
+
+//  compression middleware
+app.use(compression());
+
+// Serve static files from the 'assets' directory
+app.use(express.static(path.join(__dirname, 'assets'), {
+    maxAge: '1d' // Cache static assets for 1 day
+}));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -94,13 +133,27 @@ app.post("/sendmessage", (req, res) => {
     res.redirect("/");
 });
 
-app.post("/contact", (req, res) => {
-    var name = req.body.name;
-    var Email = req.body.email;
-    var phoneno = req.body.phone;
-    var textarea = req.body.message;
-    console.log("contact us details :-" +"name :"+name,+"email: "+ Email,+"phone no.: "+ phoneno,+"msg: "+ textarea);
-    res.redirect("/");
+app.post("/contact", async (req, res) => {
+    try {
+        const { name, email, phone, message } = req.body;
+        
+        // Create new contact document
+        const newContact = new Contact({
+            name: name,
+            email: email,
+            phone: phone,
+            message: message
+        });
+
+        // Save to database
+        await newContact.save();
+        
+        console.log("Contact form submission saved:", { name, email });
+        res.redirect("/");
+    } catch (error) {
+        console.error("Error saving contact form:", error);
+        res.status(500).json({ message: "Error saving contact form", error: error.message });
+    }
 });
 
 app.get("/signup", (req, res) => {
@@ -120,11 +173,14 @@ app.post("/signup", async (req, res) => {
             return res.status(400).json({ message: "User already exists" });
         }
 
-        // Create new user
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Create new user with hashed password
         const newUser = new User({
             username: username,
             email: email,
-            password: password // Note: In a real application, you should hash this password
+            password: hashedPassword
         });
 
         // Save user to database
@@ -150,8 +206,14 @@ app.post("/login", async (req, res) => {
         // Find user by username
         const user = await User.findOne({ username: username });
 
-        if (user && user.password === password) {
-            // In a real application, you should use proper password hashing and comparison
+        if (!user) {
+            return res.status(401).json({ message: "Invalid username or password" });
+        }
+
+        // Compare submitted password with hashed password
+        const match = await bcrypt.compare(password, user.password);
+        
+        if (match) {
             res.status(200).json({ message: "Login successful" });
         } else {
             res.status(401).json({ message: "Invalid username or password" });
@@ -176,6 +238,40 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: "Something went wrong!", error: err.message });
 });
-app.listen(4000, function () {
-    console.log("server started on port 4000");
+
+async function seedProducts() {
+  const products = [
+    { id: 1, name: "Running Sneaker Shoes", category: "men", price: 180.85, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff" },
+    { id: 2, name: "Leather Mens Slipper", category: "men", price: 190.85, image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a" },
+    { id: 3, name: "Simple Fabric Shoe", category: "women", price: 160.85, image: "https://images.unsplash.com/photo-1560343090-f0409e92791a" },
+    { id: 4, name: "Air Jordan 7 Retro", category: "sports", price: 170.85, image: "https://images.unsplash.com/photo-1552346154-21d32810aba3" },
+    { id: 5, name: "Women's High Heels", category: "women", price: 210.99, image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2" },
+    { id: 6, name: "Men's Casual Loafers", category: "men", price: 145.50, image: "https://images.unsplash.com/photo-1533867617858-e7b97e060509" },
+    { id: 7, name: "Tennis Shoes", category: "sports", price: 189.99, image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa" },
+    { id: 8, name: "Women's Sandals", category: "women", price: 99.99, image: "https://images.unsplash.com/photo-1603487742131-4160ec999306" },
+    { id: 10, name: "Basketball Sneakers", category: "sports", price: 199.99, image: "https://images.unsplash.com/photo-1579338559194-a162d19bf842" },
+    { id: 11, name: "Men's Hiking Boots", category: "men", price: 179.99, image: "https://images.unsplash.com/photo-1606890658317-7d14490b76fd" },
+    { id: 12, name: "Women's Ballet Flats", category: "women", price: 89.99, image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2" },
+    { id: 13, name: "Kids' Velcro Sneakers", category: "kids", price: 59.99, image: "https://images.unsplash.com/photo-1571210862729-78a52d3779a2" },
+  ];
+
+  try {
+    for (let product of products) {
+      await Product.findOneAndUpdate({ id: product.id }, product, { upsert: true, new: true });
+    }
+    console.log("Products seeded successfully");
+  } catch (error) {
+    console.error("Error seeding products:", error);
+  }
+}
+
+app.get("/api/products", async (req, res) => {
+  try {
+    const products = await Product.find({});
+    console.log(`Sending ${products.length} products`);
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Error fetching products", error: error.message });
+  }
 });
