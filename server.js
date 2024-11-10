@@ -68,16 +68,32 @@ const Contact = mongoose.model("Contact", contactSchema);
 //  compression middleware
 app.use(compression());
 
-// Serve static files from the 'assets' directory
-app.use(express.static(path.join(__dirname, 'assets'), {
-    maxAge: '1d' // Cache static assets for 1 day
+// Serve static files with proper MIME types
+app.use('/assets', express.static(path.join(__dirname, 'assets'), {
+    setHeaders: (res, path) => {
+        // Set correct MIME types for different file extensions
+        if (path.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css');
+        } else if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        }
+    }
+}));
+
+// Serve HTML files from root directory
+app.use(express.static(__dirname, {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.html')) {
+            res.setHeader('Content-Type', 'text/html');
+        }
+    }
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.post("/", (req, res) => {
@@ -238,6 +254,9 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: "Something went wrong!", error: err.message });
 });
+app.get("/cart", (req, res) => {
+  res.sendFile(path.join(__dirname, "cart.html"));
+});
 
 async function seedProducts() {
   const products = [
@@ -275,3 +294,6 @@ app.get("/api/products", async (req, res) => {
     res.status(500).json({ message: "Error fetching products", error: error.message });
   }
 });
+
+// Add this route
+

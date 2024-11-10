@@ -167,16 +167,13 @@ class="navbar-link">Contact</a>
 </li>
 
 <li>
-<button class="nav-action-btn">
-  <ion-icon name="bag-outline" 
-  aria-hidden="true"></ion-icon>
+<a href="/cart" class="nav-action-btn">
+  <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
 
-  <data class="nav-action-text" value="318.
-  00">Basket: <strong>$318.00</strong></data>
+  <data class="nav-action-text" value="318.00">Basket: <strong>$318.00</strong></data>
 
-  <data class="nav-action-badge" value="4" 
-  aria-hidden="true">4</data>
-</button>
+  <data class="nav-action-badge" value="4" aria-hidden="true">4</data>
+</a>
 </li>
 
 </ul>
@@ -326,7 +323,7 @@ class="navbar-link">Contact</a>
           <ul class="product-list">
 
             <li class="product-item">
-              <div class="product-card" tabindex="0">
+              <div class="product-card" data-product-id="1">
 
                 <figure class="card-banner">
                   <img src="images/product-1.jpg" width="312" height="350" loading="lazy"
@@ -1593,7 +1590,9 @@ class="navbar-link">Contact</a>
   <!-- Wishlist script -->
   <script src="js/wishlist.js"></script>
 
-  
+  <!-- Add these before closing body tag -->
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/cart.js"></script>
 
 </body>
 

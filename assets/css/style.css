@@ -1053,7 +1053,6 @@ a.footer-link:is(:hover, :focus) { color: var(--bittersweet); }
 
 
 
-
 /**
  * responsive for larger than 768px screen
  */
@@ -1454,4 +1453,12 @@ a.footer-link:is(:hover, :focus) { color: var(--bittersweet); }
 
 .slide-in {
   animation: slideIn 1s ease-out;
+}
+
+.nav-action-btn {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    /* Keep any other existing styles for nav-action-btn */
 }
