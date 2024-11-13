@@ -93,33 +93,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
+    res.sendFile(path.join(__dirname, "/assets/html/index.html"));
 });
 
 app.post("/", (req, res) => {
     var email = req.body.email;
     console.log(email);
-    res.sendFile(__dirname + "/sucess.html");
+    res.sendFile(__dirname + "/assets/html/sucess.html");
 });
 
 app.get("/about", (req, res) => {
-    res.sendFile(__dirname + "/about.html");
+    res.sendFile(__dirname + "/assets/html/about.html");
 });
 
 app.get("/wishlist", (req, res) => {
-    res.sendFile(__dirname + "/wishlist.html");
+    res.sendFile(__dirname + "/assets/html/wishlist.html");
 });
 
 app.get("/blog", (req, res) => {
-    res.sendFile(__dirname + "/blog.html");
+    res.sendFile(__dirname + "/assets/html/blog.html");
 });
 
 app.get("/contactus", (req, res) => {
-    res.sendFile(__dirname + "/contactus.html");
+    res.sendFile(__dirname + "/assets/html/contactus.html");
 });
 
 app.get("/shop", (req, res) => {
-    res.sendFile(__dirname + "/shop.html");
+    res.sendFile(__dirname + "/assets/html/shop.html");
 });
 
 app.post("/s", (req, res) => {
@@ -137,7 +137,7 @@ app.post("/s", (req, res) => {
 });
 
 app.post("/portfolio", (req, res) => {
-    res.sendFile(__dirname + "/portfolio.html");
+    res.sendFile(__dirname + "/assets/html/portfolio.html");
 });
 
 app.post("/sendmessage", (req, res) => {
@@ -173,7 +173,7 @@ app.post("/contact", async (req, res) => {
 });
 
 app.get("/signup", (req, res) => {
-    res.sendFile(__dirname + "/signup.html");
+    res.sendFile(__dirname + "/assets/html/signup.html");
 });
 
 app.post("/signup", async (req, res) => {
@@ -211,7 +211,7 @@ app.post("/signup", async (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-    res.sendFile(__dirname + "/sucess.html");
+    res.sendFile(__dirname + "/assets/html/sucess.html");
 });
 
 // new route for handling login
@@ -255,7 +255,7 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: "Something went wrong!", error: err.message });
 });
 app.get("/cart", (req, res) => {
-  res.sendFile(path.join(__dirname, "cart.html"));
+  res.sendFile(path.join(__dirname, "assets/html/cart.html"));
 });
 
 async function seedProducts() {
@@ -295,5 +295,5 @@ app.get("/api/products", async (req, res) => {
   }
 });
 
-// Add this route
+
 
