@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get product details
             const productId = this.getAttribute('data-product-id');
             const productName = productCard.querySelector('.card-title a').textContent;
-            const productImage = `/assets/images/${productCard.querySelector('.card-banner img').getAttribute('data-src')}`;
+            const productImageElement = productCard.querySelector('.card-banner img');
+            const productImage = productImageElement.getAttribute('data-src') || productImageElement.getAttribute('src') || '/assets/images/products/default-product.jpg';
             const productPrice = productCard.querySelector('.card-price').getAttribute('value');
 
             // Create product object
